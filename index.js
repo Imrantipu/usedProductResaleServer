@@ -61,6 +61,13 @@ async function run()
         const bookings = await bookingsCollection.find(query).toArray();
         res.send(bookings);
       });
+//  checking user is seller
+      app.get('/users/seller/:email', async (req, res) => {
+        const email = req.params.email;
+        const query = { email }
+        const user = await usersCollection.findOne(query);
+        res.send({ isSeller: user?.category === 'seller' });
+    });
     
   }
   finally{
