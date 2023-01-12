@@ -68,6 +68,14 @@ async function run()
         const user = await usersCollection.findOne(query);
         res.send({ isSeller: user?.category === 'seller' });
     });
+
+// checking user is admin
+app.get('/users/admin/:email', async (req, res) => {
+    const email = req.params.email;
+    const query = { email }
+    const user = await usersCollection.findOne(query);
+    res.send({ isAdmin: user?.category === 'admin' });
+  });
     
   }
   finally{
