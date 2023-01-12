@@ -103,6 +103,19 @@ app.get('/users/admin/:email', async (req, res) => {
     const result = await sellerProductsCollection.deleteOne(query);
     res.send(result);
 });
+app.get('/allbuyers', async (req, res) => {
+    const query = {category:"buyer"}
+    const cursor = usersCollection.find(query);
+    const buyers = await cursor.toArray();
+    res.send(buyers);
+  });
+  
+  app.delete('/allbuyers/:id', async (req, res) => {
+    const id = req.params.id;
+    const query = { _id: ObjectId(id) };
+    const result = await usersCollection.deleteOne(query);
+    res.send(result);
+  });
     
   }
   finally{
