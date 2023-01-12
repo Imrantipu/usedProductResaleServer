@@ -30,6 +30,14 @@ async function run()
         const products = await cursor.toArray();
         res.send(products);
     });
+
+    // homepage category product single category route to shoe category items
+    app.get('/products/:id', async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: ObjectId(id) };
+        const product = await productsCollection.findOne(query);
+        res.send(product);
+      });
     
   }
   finally{
