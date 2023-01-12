@@ -77,11 +77,24 @@ app.get('/users/admin/:email', async (req, res) => {
     const user = await usersCollection.findOne(query);
     res.send({ isAdmin: user?.category === 'admin' });
   });
-
+//  seller product uplode in database
   app.post('/sellerproducts', async (req, res) => {
     const product = req.body;
     const result = await sellerProductsCollection.insertOne(product);
     res.send(result);
+  });
+//  seller get all his product
+  app.get('/sellerproducts', async (req, res) => {
+    
+    let query = {};
+    if (req.query.email) {
+        query = {
+            email: req.query.email
+        }
+    }
+    const cursor = sellerProductsCollection.find(query);
+    const sellerProducts = await cursor.toArray();
+    res.send(sellerProducts);
   });
     
   }
