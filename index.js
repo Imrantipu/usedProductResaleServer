@@ -96,6 +96,13 @@ app.get('/users/admin/:email', async (req, res) => {
     const sellerProducts = await cursor.toArray();
     res.send(sellerProducts);
   });
+
+  app.delete('/sellerproducts/:id', async (req, res) => {
+    const id = req.params.id;
+    const query = { _id: ObjectId(id) };
+    const result = await sellerProductsCollection.deleteOne(query);
+    res.send(result);
+});
     
   }
   finally{
