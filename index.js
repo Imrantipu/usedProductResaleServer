@@ -116,6 +116,20 @@ app.get('/allbuyers', async (req, res) => {
     const result = await usersCollection.deleteOne(query);
     res.send(result);
   });
+
+  app.get('/allsellers', async (req, res) => {
+    const query = {category:"seller"}
+    const cursor = usersCollection.find(query);
+    const sellers = await cursor.toArray();
+    res.send(sellers);
+  });
+  
+  app.delete('/allsellers/:id', async (req, res) => {
+    const id = req.params.id;
+    const query = { _id: ObjectId(id) };
+    const result = await usersCollection.deleteOne(query);
+    res.send(result);
+  });
     
   }
   finally{
