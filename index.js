@@ -24,6 +24,7 @@ async function run()
     const productsCollection = client.db('mobileHunt').collection('productsItem');
     const usersCollection = client.db('mobileHunt').collection('users');
     const bookingsCollection = client.db('mobileHunt').collection('bookings');
+    const sellerProductsCollection = client.db('mobileHunt').collection('sellerProducts');
 
 // homepage category product collection api
     app.get('/products', async (req, res) => {
@@ -75,6 +76,12 @@ app.get('/users/admin/:email', async (req, res) => {
     const query = { email }
     const user = await usersCollection.findOne(query);
     res.send({ isAdmin: user?.category === 'admin' });
+  });
+
+  app.post('/sellerproducts', async (req, res) => {
+    const product = req.body;
+    const result = await sellerProductsCollection.insertOne(product);
+    res.send(result);
   });
     
   }
