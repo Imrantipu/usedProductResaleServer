@@ -22,6 +22,7 @@ async function run()
   {
 
     const productsCollection = client.db('mobileHunt').collection('productsItem');
+    const usersCollection = client.db('mobileHunt').collection('users');
 
 // homepage category product collection api
     app.get('/products', async (req, res) => {
@@ -30,14 +31,20 @@ async function run()
         const products = await cursor.toArray();
         res.send(products);
     });
+// user created in db while signup
+    app.post('/users', async (req, res) => {
+        const user = req.body;
+        const result = await usersCollection.insertOne(user);
+        res.send(result);
+    });
 
-    // homepage category product single category route to shoe category items
-    app.get('/products/:id', async (req, res) => {
-        const id = req.params.id;
-        const query = { _id: ObjectId(id) };
-        const product = await productsCollection.findOne(query);
-        res.send(product);
-      });
+    // homepage category product single category route to show category items
+    // app.get('/products/:id', async (req, res) => {
+    //     const id = req.params.id;
+    //     const query = { _id:ObjectId(id) };
+    //     const product = await productsCollection.findOne(query);
+    //     res.send(product);
+    //   });
     
   }
   finally{
