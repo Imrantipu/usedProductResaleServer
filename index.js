@@ -23,6 +23,7 @@ async function run()
 
     const productsCollection = client.db('mobileHunt').collection('productsItem');
     const usersCollection = client.db('mobileHunt').collection('users');
+    const bookingsCollection = client.db('mobileHunt').collection('bookings');
 
 // homepage category product collection api
     app.get('/products', async (req, res) => {
@@ -39,12 +40,18 @@ async function run()
     });
 
     // homepage category product single category route to show category items
-    // app.get('/products/:id', async (req, res) => {
-    //     const id = req.params.id;
-    //     const query = { _id:ObjectId(id) };
-    //     const product = await productsCollection.findOne(query);
-    //     res.send(product);
-    //   });
+    app.get('/products/:id', async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: ObjectId(id) };
+        const product = await productsCollection.findOne(query);
+        res.send(product);
+      });
+//  buyer booking a product
+      app.post('/bookings', async(req, res) => {
+        const booking = req.body;
+        const result = await bookingsCollection.insertOne(booking);
+        res.send(result);
+    });
     
   }
   finally{
